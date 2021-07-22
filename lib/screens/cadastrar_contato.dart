@@ -1,6 +1,10 @@
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:contato_app/stores/contato.dart';
 import 'package:contato_app/stores/contato_list.dart';
+import 'package:contato_app/widgets/custom_text_form_Field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:provider/provider.dart';
 
 class CadastrarContato extends StatefulWidget {
@@ -42,15 +46,47 @@ class _CadastrarContatoState extends State<CadastrarContato> {
               key: _formKey,
               child: Column(
                 children: [
-                  _textFormField('Nome', nameController, (newValue) {
-                    nameController.text = newValue!;
-                  }),
-                  _textFormField('Telefone', phoneController, (newValue) {
-                    phoneController.text = newValue!;
-                  }),
-                  _textFormField('Email', emailController, (newValue) {
-                    emailController.text = newValue!;
-                  }),
+                  CustomTextFormField(
+                    labelText: 'Nome',
+                    controller: nameController,
+                    onSaved: (newValue) {
+                      nameController.text = newValue!;
+                    },
+                    validator: (value) {
+                      if (value!.isEmpty || value.length < 3) {
+                        return 'Informe um nome válido';
+                      }
+                      return null;
+                    },
+                  ),
+                  CustomTextFormField(
+                    labelText: 'Telefone',
+                    controller: phoneController,
+                    onSaved: (newValue) {
+                      phoneController.text = newValue!;
+                    },
+                    validator: (value) {
+                      if (value!.isEmpty || value.length < 8) {
+                        return 'Informe um telefone válido';
+                      }
+                      return null;
+                    },
+                    keyboardType: TextInputType.numberWithOptions(),
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      TelefoneInputFormatter()
+                    ],
+                  ),
+                  CustomTextFormField(
+                    labelText: 'E-mail',
+                    controller: emailController,
+                    onSaved: (newValue) {
+                      emailController.text = newValue!;
+                    },
+                    validator:
+                        EmailValidator(errorText: 'Informe um e-mail válido'),
+                    keyboardType: TextInputType.emailAddress,
+                  ),
                   _dropdownButtonFormField((newValue) {
                     categoriaContato = newValue;
                   }),
@@ -59,16 +95,19 @@ class _CadastrarContatoState extends State<CadastrarContato> {
                       width: 350,
                       child: ElevatedButton(
                         onPressed: () {
-                          _formKey.currentState!.save();
-                          var contact = Contact(
-                              name: nameController.text,
-                              phoneNumber: phoneController.text,
-                              email: emailController.text,
-                              contactCategory: categoriaContato!);
+                          if (_formKey.currentState!.validate()) {
+                            _formKey.currentState!.save();
 
-                          list.addContacts(contact);
-                          _clearTextFields();
-                          Navigator.of(context).pop();
+                            var contact = Contact(
+                                name: nameController.text,
+                                phoneNumber: phoneController.text,
+                                email: emailController.text,
+                                contactCategory: categoriaContato!);
+
+                            list.addContacts(contact);
+                            _clearTextFields();
+                            Navigator.of(context).pop();
+                          }
                         },
                         child: Text('Cadastrar Contato'),
                         style: ElevatedButton.styleFrom(
@@ -85,32 +124,13 @@ class _CadastrarContatoState extends State<CadastrarContato> {
     emailController.clear();
   }
 
-  Container _textFormField(String label, TextEditingController controller,
-      Function(String?) onSaved) {
-    return Container(
-        margin: EdgeInsets.only(bottom: 16.0),
-        height: 48,
-        child: TextFormField(
-          controller: controller,
-          onSaved: onSaved,
-          decoration: InputDecoration(
-              labelText: label,
-              contentPadding:
-                  EdgeInsets.only(top: 16.0, bottom: 16.0, left: 16.0),
-              filled: true,
-              fillColor: Colors.black.withAlpha(20),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  borderSide: BorderSide.none)),
-        ));
-  }
-
   Container _dropdownButtonFormField(Function(String?) onChanged) {
     List<String> categorias = ['Trabalho', 'Amigos', 'Universidade'];
     return Container(
       margin: EdgeInsets.only(bottom: 16.0),
       height: 55,
       child: DropdownButtonFormField<String>(
+        autofocus: false,
         items: categorias
             .map((String categoria) =>
                 DropdownMenuItem(value: categoria, child: Text(categoria)))

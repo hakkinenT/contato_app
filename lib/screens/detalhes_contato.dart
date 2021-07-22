@@ -26,7 +26,6 @@ class _DetalhesDoContatoState extends State<DetalhesDoContato> {
                   setState(() {
                     widget.contact.isFavorite = !isFavorite;
                     isFavorite = !isFavorite;
-                    print(widget.contact.isFavorite);
                   });
                 },
                 icon: widget.contact.isFavorite
