@@ -1,13 +1,11 @@
-import 'package:contato_app/screens/cadastrar_contato.dart';
 import 'package:contato_app/screens/detalhes_contato.dart';
 import 'package:contato_app/stores/contato_list.dart';
-import 'package:contato_app/widgets/app_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
-class ListarContato extends StatelessWidget {
-  const ListarContato({Key? key}) : super(key: key);
+class ListarContatosFavoritos extends StatelessWidget {
+  const ListarContatosFavoritos({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,24 +14,15 @@ class ListarContato extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            'Contatos',
+            'Contatos Favoritos',
             style: TextStyle(color: Colors.blueAccent[700]),
           ),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => CadastrarContato()));
-                },
-                icon: Icon(Icons.add, color: Theme.of(context).accentColor))
-          ],
         ),
-        drawer: AppDrawer(),
         body: Observer(
           builder: (_) => ListView.separated(
               padding: EdgeInsets.only(top: 10),
               itemBuilder: (context, index) {
-                final contact = list.contacts[index];
+                final contact = list.favoriteContacts[index];
 
                 return ListTile(
                   title: Text(contact.name),
@@ -54,7 +43,7 @@ class ListarContato extends StatelessWidget {
                 );
               },
               separatorBuilder: (context, index) => Divider(),
-              itemCount: list.contacts.length),
+              itemCount: list.favoriteContacts.length),
         ));
   }
 }

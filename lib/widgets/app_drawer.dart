@@ -1,5 +1,6 @@
 import 'package:contato_app/screens/cadastrar_contato.dart';
 import 'package:contato_app/screens/listar_contato.dart';
+import 'package:contato_app/screens/listar_contatos_favoritos.dart';
 import 'package:contato_app/screens/termo_de_uso.dart';
 import 'package:flutter/material.dart';
 
@@ -32,6 +33,11 @@ class AppDrawer extends StatelessWidget {
             title: Text('Contatos'),
             leading: Icon(Icons.contacts),
             onTap: () => sendTo(context, ListarContato()),
+          ),
+          ListTile(
+            title: Text('Favoritos'),
+            leading: Icon(Icons.favorite),
+            onTap: () => sendTo(context, ListarContatosFavoritos()),
           ),
           ListTile(
             title: Text('Termos de Uso'),

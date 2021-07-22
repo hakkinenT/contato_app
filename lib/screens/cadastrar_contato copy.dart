@@ -1,6 +1,7 @@
 import 'package:contato_app/stores/contato.dart';
 import 'package:contato_app/stores/contato_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 class CadastrarContato extends StatefulWidget {
@@ -13,21 +14,11 @@ class CadastrarContato extends StatefulWidget {
 class _CadastrarContatoState extends State<CadastrarContato> {
   final _formKey = GlobalKey<FormState>();
   String? categoriaContato;
-  var nameController = TextEditingController();
-  var phoneController = TextEditingController();
-  var emailController = TextEditingController();
-
-  @override
-  void dispose() {
-    nameController.dispose();
-    phoneController.dispose();
-    emailController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     final list = Provider.of<ContactList>(context);
+    final formContact = Provider.of<Contact>(context);
 
     return Scaffold(
         appBar: AppBar(
@@ -42,32 +33,32 @@ class _CadastrarContatoState extends State<CadastrarContato> {
               key: _formKey,
               child: Column(
                 children: [
-                  _textFormField('Nome', nameController, (newValue) {
-                    nameController.text = newValue!;
-                  }),
-                  _textFormField('Telefone', phoneController, (newValue) {
-                    phoneController.text = newValue!;
-                  }),
-                  _textFormField('Email', emailController, (newValue) {
-                    emailController.text = newValue!;
-                  }),
-                  _dropdownButtonFormField((newValue) {
-                    categoriaContato = newValue;
-                  }),
+                  Observer(
+                      builder: (_) => _textFormField('Nome', (newValue) {
+                            formContact.name = newValue;
+                          })),
+                  Observer(
+                      builder: (_) => _textFormField('Telefone', (newValue) {
+                            formContact.phoneNumber = newValue;
+                          })),
+                  Observer(
+                      builder: (_) => _textFormField('Email', (newValue) {
+                            formContact.email = newValue;
+                          })),
+                  Observer(
+                      builder: (_) => _dropdownButtonFormField((newValue) {
+                            categoriaContato = newValue;
+                            formContact.contactCategory = newValue!;
+                          })),
                   SizedBox(
                       height: 48,
                       width: 350,
                       child: ElevatedButton(
                         onPressed: () {
+                          print(
+                              '${formContact.name}, ${formContact.email}, ${formContact.contactCategory}, ${formContact.phoneNumber}');
                           _formKey.currentState!.save();
-                          var contact = Contact(
-                              name: nameController.text,
-                              phoneNumber: phoneController.text,
-                              email: emailController.text,
-                              contactCategory: categoriaContato!);
-
-                          list.addContacts(contact);
-                          _clearTextFields();
+                          list.addContacts(formContact);
                           Navigator.of(context).pop();
                         },
                         child: Text('Cadastrar Contato'),
@@ -79,20 +70,12 @@ class _CadastrarContatoState extends State<CadastrarContato> {
         ));
   }
 
-  void _clearTextFields() {
-    nameController.clear();
-    phoneController.clear();
-    emailController.clear();
-  }
-
-  Container _textFormField(String label, TextEditingController controller,
-      Function(String?) onSaved) {
+  Container _textFormField(String label, Function(String) onChanged) {
     return Container(
         margin: EdgeInsets.only(bottom: 16.0),
         height: 48,
         child: TextFormField(
-          controller: controller,
-          onSaved: onSaved,
+          onChanged: onChanged,
           decoration: InputDecoration(
               labelText: label,
               contentPadding:
