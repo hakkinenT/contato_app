@@ -2,6 +2,7 @@ import 'package:contato_app/screens/cadastrar_contato.dart';
 import 'package:contato_app/screens/detalhes_contato.dart';
 import 'package:contato_app/stores/contato_list.dart';
 import 'package:contato_app/widgets/app_drawer.dart';
+import 'package:contato_app/widgets/popup_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
@@ -45,7 +46,14 @@ class ListarContato extends StatelessWidget {
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
-                  trailing: Icon(Icons.arrow_forward_ios),
+                  trailing: PopupMenu(
+                    contact: contact,
+                    callback: (bool value) {
+                      if (value) {
+                        list.removeContact(contact);
+                      }
+                    },
+                  ),
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => DetalhesDoContato(contact: contact),

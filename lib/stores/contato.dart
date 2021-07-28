@@ -11,4 +11,14 @@ class Contact {
       required this.email,
       required this.contactCategory,
       this.isFavorite = false});
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Contact &&
+          runtimeType == other.runtimeType &&
+          phoneNumber == other.phoneNumber;
+
+  @override
+  int get hashCode => phoneNumber.hashCode;
 }

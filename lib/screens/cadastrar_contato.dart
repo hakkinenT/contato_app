@@ -33,6 +33,55 @@ class _CadastrarContatoState extends State<CadastrarContato> {
   Widget build(BuildContext context) {
     final list = Provider.of<ContactList>(context);
 
+    Future<String?> _showDialogSucess() async {
+      return showDialog<String>(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(20))),
+              titlePadding: EdgeInsets.all(30),
+              title: Column(
+                children: [
+                  Icon(
+                    Icons.check_circle_outline_outlined,
+                    size: 50,
+                    color: Colors.green,
+                  ),
+                  Text('Sucesso!'),
+                  Divider(),
+                  Text(
+                    'O contato foi cadastrado com sucesso!',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 14.0, color: Colors.black54),
+                  )
+                ],
+              ),
+              actionsPadding: EdgeInsets.only(bottom: 10),
+              actions: [
+                Center(
+                  child: Container(
+                    height: 35.0,
+                    width: 70.0,
+                    child: TextButton(
+                      child: Text(
+                        'OK',
+                        style: TextStyle(
+                            color: Theme.of(context).accentColor,
+                            fontSize: 17.0),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ),
+                )
+              ],
+            );
+          });
+    }
+
     return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -94,7 +143,7 @@ class _CadastrarContatoState extends State<CadastrarContato> {
                       height: 48,
                       width: 350,
                       child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             _formKey.currentState!.save();
 
@@ -105,6 +154,8 @@ class _CadastrarContatoState extends State<CadastrarContato> {
                                 contactCategory: categoriaContato!);
 
                             list.addContacts(contact);
+
+                            await _showDialogSucess();
                             _clearTextFields();
                             Navigator.of(context).pop();
                           }
