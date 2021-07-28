@@ -17,20 +17,6 @@ mixin _$ContactList on _ContactList, Store {
               () => super.favoriteContacts,
               name: '_ContactList.favoriteContacts'))
           .value;
-  Computed<bool>? _$hasFavoriteContactsComputed;
-
-  @override
-  bool get hasFavoriteContacts => (_$hasFavoriteContactsComputed ??=
-          Computed<bool>(() => super.hasFavoriteContacts,
-              name: '_ContactList.hasFavoriteContacts'))
-      .value;
-  Computed<ObservableList<Contact>>? _$visibleContactsComputed;
-
-  @override
-  ObservableList<Contact> get visibleContacts => (_$visibleContactsComputed ??=
-          Computed<ObservableList<Contact>>(() => super.visibleContacts,
-              name: '_ContactList.visibleContacts'))
-      .value;
 
   final _$contactsAtom = Atom(name: '_ContactList.contacts');
 
@@ -44,21 +30,6 @@ mixin _$ContactList on _ContactList, Store {
   set contacts(ObservableList<Contact> value) {
     _$contactsAtom.reportWrite(value, super.contacts, () {
       super.contacts = value;
-    });
-  }
-
-  final _$filterAtom = Atom(name: '_ContactList.filter');
-
-  @override
-  VisibilityFilter get filter {
-    _$filterAtom.reportRead();
-    return super.filter;
-  }
-
-  @override
-  set filter(VisibilityFilter value) {
-    _$filterAtom.reportWrite(value, super.filter, () {
-      super.filter = value;
     });
   }
 
@@ -87,24 +58,10 @@ mixin _$ContactList on _ContactList, Store {
   }
 
   @override
-  void changeFilter(VisibilityFilter filter) {
-    final _$actionInfo = _$_ContactListActionController.startAction(
-        name: '_ContactList.changeFilter');
-    try {
-      return super.changeFilter(filter);
-    } finally {
-      _$_ContactListActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 contacts: ${contacts},
-filter: ${filter},
-favoriteContacts: ${favoriteContacts},
-hasFavoriteContacts: ${hasFavoriteContacts},
-visibleContacts: ${visibleContacts}
+favoriteContacts: ${favoriteContacts}
     ''';
   }
 }
