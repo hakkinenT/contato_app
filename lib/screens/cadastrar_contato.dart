@@ -20,6 +20,30 @@ class _CadastrarContatoState extends State<CadastrarContato> {
   var nameController = TextEditingController();
   var phoneController = TextEditingController();
   var emailController = TextEditingController();
+  String _title = 'Cadastrar Contato';
+  bool _isEdit = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final Contact? contact =
+        ModalRoute.of(context)!.settings.arguments as Contact;
+
+    if (contact != null) {
+      setState(() {
+        _isEdit = true;
+
+        _title = 'Editar Contato';
+
+        nameController.text = contact.name;
+        emailController.text = contact.email;
+        phoneController.text = contact.phoneNumber;
+
+        categoriaContato = contact.contactCategory;
+      });
+    }
+  }
 
   @override
   void dispose() {
@@ -51,11 +75,19 @@ class _CadastrarContatoState extends State<CadastrarContato> {
                   ),
                   Text('Sucesso!'),
                   Divider(),
-                  Text(
-                    'O contato foi cadastrado com sucesso!',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 14.0, color: Colors.black54),
-                  )
+                  !_isEdit
+                      ? Text(
+                          'O contato foi cadastrado com sucesso!',
+                          textAlign: TextAlign.center,
+                          style:
+                              TextStyle(fontSize: 14.0, color: Colors.black54),
+                        )
+                      : Text(
+                          'O contato foi editado com sucesso!',
+                          textAlign: TextAlign.center,
+                          style:
+                              TextStyle(fontSize: 14.0, color: Colors.black54),
+                        )
                 ],
               ),
               actionsPadding: EdgeInsets.only(bottom: 10),
@@ -85,7 +117,7 @@ class _CadastrarContatoState extends State<CadastrarContato> {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            'Cadastrar Contato',
+            _title,
             style: TextStyle(color: Colors.blueAccent[700]),
           ),
         ),
@@ -153,14 +185,20 @@ class _CadastrarContatoState extends State<CadastrarContato> {
                                 email: emailController.text,
                                 contactCategory: categoriaContato!);
 
-                            list.addContacts(contact);
+                            if (!_isEdit) {
+                              list.addContacts(contact);
+                            } else {
+                              list.updateContact(contact);
+                            }
 
                             await _showDialogSucess();
                             _clearTextFields();
                             Navigator.of(context).pop();
                           }
                         },
-                        child: Text('Cadastrar Contato'),
+                        child: _isEdit
+                            ? Text('Editar Contato')
+                            : Text('Cadastrar Contato'),
                         style: ElevatedButton.styleFrom(
                             primary: Theme.of(context).accentColor),
                       ))

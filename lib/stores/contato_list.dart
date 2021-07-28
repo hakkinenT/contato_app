@@ -26,6 +26,21 @@ abstract class _ContactList with Store {
     contacts.removeWhere((element) => element == contact);
   }
 
+  @action
+  void updateContact(Contact contact) {
+    int index = contacts.indexOf(contact);
+
+    if (index == -1) {
+      return;
+    }
+
+    contacts[index].name = contact.name;
+    contacts[index].email = contact.email;
+    contacts[index].phoneNumber = contact.phoneNumber;
+    contacts[index].contactCategory = contact.contactCategory;
+    contacts[index].isFavorite = contact.isFavorite;
+  }
+
   @override
   String toString() {
     return contacts.toString();

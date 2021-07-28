@@ -183,7 +183,7 @@ class _DetalhesDoContatoState extends State<DetalhesDoContato> {
     }
   }
 
-  Future<void> _enviarEmail(String email) async {
+  _enviarEmail(String email) async {
     if (await canLaunch("mailto:$email")) {
       await launch("mailto:$email");
     } else {

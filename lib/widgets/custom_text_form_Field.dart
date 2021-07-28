@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String labelText;
+  final String? initialValue;
   final FormFieldValidator<String>? validator;
   final TextEditingController? controller;
   final bool autofocus;
@@ -15,6 +16,7 @@ class CustomTextFormField extends StatelessWidget {
 
   const CustomTextFormField(
       {required this.labelText,
+      this.initialValue,
       this.validator,
       this.controller,
       this.autofocus = false,
@@ -30,6 +32,7 @@ class CustomTextFormField extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(bottom: 16.0),
       child: TextFormField(
+        initialValue: initialValue,
         obscureText: obscureText,
         controller: controller,
         autofocus: autofocus,

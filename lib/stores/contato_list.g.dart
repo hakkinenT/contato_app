@@ -58,6 +58,17 @@ mixin _$ContactList on _ContactList, Store {
   }
 
   @override
+  void updateContact(Contact contact) {
+    final _$actionInfo = _$_ContactListActionController.startAction(
+        name: '_ContactList.updateContact');
+    try {
+      return super.updateContact(contact);
+    } finally {
+      _$_ContactListActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 contacts: ${contacts},
