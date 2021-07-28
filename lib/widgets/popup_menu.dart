@@ -1,5 +1,5 @@
 import 'package:contato_app/screens/cadastrar_contato.dart';
-import 'package:contato_app/stores/contato.dart';
+import 'package:contato_app/models/contato.dart';
 import 'package:flutter/material.dart';
 
 class PopupMenu extends StatelessWidget {

@@ -1,4 +1,4 @@
-import 'package:contato_app/stores/contato.dart';
+import 'package:contato_app/models/contato.dart';
 
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';

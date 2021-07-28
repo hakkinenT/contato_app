@@ -1,5 +1,5 @@
 import 'package:brasil_fields/brasil_fields.dart';
-import 'package:contato_app/stores/contato.dart';
+import 'package:contato_app/models/contato.dart';
 import 'package:contato_app/stores/contato_list.dart';
 import 'package:contato_app/widgets/custom_text_form_Field.dart';
 import 'package:flutter/material.dart';

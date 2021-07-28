@@ -1,4 +1,4 @@
-import 'package:contato_app/stores/contato.dart';
+import 'package:contato_app/models/contato.dart';
 import 'package:mobx/mobx.dart';
 
 part 'contato_list.g.dart';
