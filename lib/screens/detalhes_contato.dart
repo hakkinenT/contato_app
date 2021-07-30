@@ -1,6 +1,7 @@
-import 'package:contato_app/models/contato.dart';
+import 'package:contato_app/stores/contato.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetalhesDoContato extends StatefulWidget {
@@ -22,9 +23,10 @@ class _DetalhesDoContatoState extends State<DetalhesDoContato> {
             IconButton(
                 onPressed: () {
                   setState(() {
-                    widget.contact.isFavorite = !isFavorite;
                     isFavorite = !isFavorite;
                   });
+
+                  widget.contact.setIsFavorite(isFavorite);
                 },
                 icon: widget.contact.isFavorite
                     ? Icon(
@@ -64,7 +66,7 @@ class _DetalhesDoContatoState extends State<DetalhesDoContato> {
                           Padding(
                             padding: EdgeInsets.only(bottom: 18.0),
                             child: Text(
-                              widget.contact.name,
+                              "${widget.contact.name}",
                               style: TextStyle(
                                   fontSize: 20.0, fontWeight: FontWeight.w600),
                             ),
@@ -85,7 +87,7 @@ class _DetalhesDoContatoState extends State<DetalhesDoContato> {
                                   IconButton(
                                       onPressed: () {
                                         _fazerLigacao(
-                                            widget.contact.phoneNumber);
+                                            "${widget.contact.phoneNumber}");
                                       },
                                       icon: Icon(
                                         Icons.phone_android,
@@ -103,14 +105,14 @@ class _DetalhesDoContatoState extends State<DetalhesDoContato> {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Text(
-                                    widget.contact.email,
+                                    "${widget.contact.email}",
                                     style: TextStyle(
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w400),
                                   ),
                                   IconButton(
                                       onPressed: () {
-                                        _enviarEmail(widget.contact.email);
+                                        _enviarEmail("${widget.contact.email}");
                                       },
                                       icon: Icon(
                                         Icons.email,
@@ -128,7 +130,7 @@ class _DetalhesDoContatoState extends State<DetalhesDoContato> {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Text(
-                                    widget.contact.contactCategory,
+                                    "${widget.contact.contactCategory}",
                                     style: TextStyle(
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w400),

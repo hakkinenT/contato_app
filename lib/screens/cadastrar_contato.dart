@@ -1,5 +1,6 @@
 import 'package:brasil_fields/brasil_fields.dart';
-import 'package:contato_app/models/contato.dart';
+import 'package:contato_app/models/contact_model.dart';
+import 'package:contato_app/stores/contato.dart';
 import 'package:contato_app/stores/contato_list.dart';
 import 'package:contato_app/widgets/custom_text_form_Field.dart';
 import 'package:flutter/material.dart';
@@ -22,13 +23,14 @@ class _CadastrarContatoState extends State<CadastrarContato> {
   var emailController = TextEditingController();
   String _title = 'Cadastrar Contato';
   bool _isEdit = false;
+  String? _id;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
     final Contact? contact =
-        ModalRoute.of(context)!.settings.arguments as Contact;
+        ModalRoute.of(context)?.settings.arguments as Contact?;
 
     if (contact != null) {
       setState(() {
@@ -36,10 +38,10 @@ class _CadastrarContatoState extends State<CadastrarContato> {
 
         _title = 'Editar Contato';
 
+        _id = contact.id;
         nameController.text = contact.name;
         emailController.text = contact.email;
         phoneController.text = contact.phoneNumber;
-
         categoriaContato = contact.contactCategory;
       });
     }
@@ -179,16 +181,25 @@ class _CadastrarContatoState extends State<CadastrarContato> {
                           if (_formKey.currentState!.validate()) {
                             _formKey.currentState!.save();
 
-                            var contact = Contact(
-                                name: nameController.text,
-                                phoneNumber: phoneController.text,
-                                email: emailController.text,
-                                contactCategory: categoriaContato!);
+                            ContactModel contactModel;
 
                             if (!_isEdit) {
-                              list.addContacts(contact);
+                              contactModel = ContactModel(
+                                  name: nameController.text,
+                                  phoneNumber: phoneController.text,
+                                  email: emailController.text,
+                                  contactCategory: categoriaContato!);
+
+                              list.addContacts(contactModel);
                             } else {
-                              list.updateContact(contact);
+                              contactModel = ContactModel(
+                                  id: _id,
+                                  name: nameController.text,
+                                  phoneNumber: phoneController.text,
+                                  email: emailController.text,
+                                  contactCategory: categoriaContato!);
+
+                              list.updateContact(contactModel);
                             }
 
                             await _showDialogSucess();

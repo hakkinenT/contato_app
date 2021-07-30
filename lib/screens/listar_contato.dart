@@ -36,30 +36,32 @@ class ListarContato extends StatelessWidget {
               itemBuilder: (context, index) {
                 final contact = list.contacts[index];
 
-                return ListTile(
-                  title: Text(contact.name),
-                  subtitle: Text(contact.phoneNumber),
-                  leading: CircleAvatar(
-                    backgroundColor: Theme.of(context).accentColor,
-                    child: Text(
-                      '${contact.name[0]}',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                  trailing: PopupMenu(
-                    contact: contact,
-                    callback: (bool value) {
-                      if (value) {
-                        list.removeContact(contact);
-                      }
-                    },
-                  ),
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => DetalhesDoContato(contact: contact),
-                    ));
-                  },
-                );
+                return Observer(
+                    builder: (_) => ListTile(
+                          title: Text(contact.name),
+                          subtitle: Text(contact.phoneNumber),
+                          leading: CircleAvatar(
+                            backgroundColor: Theme.of(context).accentColor,
+                            child: Text(
+                              '${contact.name[0]}',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                          trailing: PopupMenu(
+                            contact: contact,
+                            callback: (bool value) {
+                              if (value) {
+                                list.removeContact(contact);
+                              }
+                            },
+                          ),
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  DetalhesDoContato(contact: contact),
+                            ));
+                          },
+                        ));
               },
               separatorBuilder: (context, index) => Divider(),
               itemCount: list.contacts.length),

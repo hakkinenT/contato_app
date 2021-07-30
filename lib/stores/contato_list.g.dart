@@ -36,11 +36,11 @@ mixin _$ContactList on _ContactList, Store {
   final _$_ContactListActionController = ActionController(name: '_ContactList');
 
   @override
-  void addContacts(Contact contact) {
+  void addContacts(ContactModel contactModel) {
     final _$actionInfo = _$_ContactListActionController.startAction(
         name: '_ContactList.addContacts');
     try {
-      return super.addContacts(contact);
+      return super.addContacts(contactModel);
     } finally {
       _$_ContactListActionController.endAction(_$actionInfo);
     }
@@ -58,11 +58,11 @@ mixin _$ContactList on _ContactList, Store {
   }
 
   @override
-  void updateContact(Contact contact) {
+  void updateContact(ContactModel contactModel) {
     final _$actionInfo = _$_ContactListActionController.startAction(
         name: '_ContactList.updateContact');
     try {
-      return super.updateContact(contact);
+      return super.updateContact(contactModel);
     } finally {
       _$_ContactListActionController.endAction(_$actionInfo);
     }

@@ -1,4 +1,5 @@
-import 'package:contato_app/models/contato.dart';
+import 'package:contato_app/models/contact_model.dart';
+import 'package:contato_app/stores/contato.dart';
 import 'package:mobx/mobx.dart';
 
 part 'contato_list.g.dart';
@@ -14,7 +15,15 @@ abstract class _ContactList with Store {
       contacts.where((contact) => contact.isFavorite == true));
 
   @action
-  void addContacts(Contact contact) {
+  void addContacts(ContactModel contactModel) {
+    final contact = Contact(
+        id: contactModel.id,
+        name: contactModel.name,
+        phoneNumber: contactModel.phoneNumber,
+        email: contactModel.email,
+        contactCategory: contactModel.contactCategory,
+        isFavorite: contactModel.isFavorite);
+
     contacts.add(contact);
   }
 
@@ -27,18 +36,26 @@ abstract class _ContactList with Store {
   }
 
   @action
-  void updateContact(Contact contact) {
-    int index = contacts.indexOf(contact);
+  void updateContact(ContactModel contactModel) {
+    final contact = Contact(
+        id: contactModel.id,
+        name: contactModel.name,
+        phoneNumber: contactModel.phoneNumber,
+        email: contactModel.email,
+        contactCategory: contactModel.contactCategory,
+        isFavorite: contactModel.isFavorite);
+
+    int index = contacts.indexWhere((c) => c.id == contact.id);
 
     if (index == -1) {
       return;
     }
 
-    contacts[index].name = contact.name;
-    contacts[index].email = contact.email;
-    contacts[index].phoneNumber = contact.phoneNumber;
-    contacts[index].contactCategory = contact.contactCategory;
-    contacts[index].isFavorite = contact.isFavorite;
+    contacts[index].name = contactModel.name;
+    contacts[index].email = contactModel.email;
+    contacts[index].phoneNumber = contactModel.phoneNumber;
+    contacts[index].contactCategory = contactModel.contactCategory;
+    contacts[index].isFavorite = contactModel.isFavorite;
   }
 
   @override

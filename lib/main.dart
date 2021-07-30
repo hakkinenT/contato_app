@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       providers: [
         Provider<ContactList>(
           create: (_) => ContactList(),
-        )
+        ),
       ],
       child: MaterialApp(
         title: 'Contatos App',
