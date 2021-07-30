@@ -135,12 +135,7 @@ class _CadastrarContatoState extends State<CadastrarContato> {
                     onSaved: (newValue) {
                       nameController.text = newValue!;
                     },
-                    validator: (value) {
-                      if (value!.isEmpty || value.length < 3) {
-                        return 'Informe um nome válido';
-                      }
-                      return null;
-                    },
+                    validator: nameValidator,
                   ),
                   CustomTextFormField(
                     labelText: 'Telefone',
@@ -148,12 +143,7 @@ class _CadastrarContatoState extends State<CadastrarContato> {
                     onSaved: (newValue) {
                       phoneController.text = newValue!;
                     },
-                    validator: (value) {
-                      if (value!.isEmpty || value.length < 8) {
-                        return 'Informe um telefone válido';
-                      }
-                      return null;
-                    },
+                    validator: phoneValidator,
                     keyboardType: TextInputType.numberWithOptions(),
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
@@ -166,8 +156,7 @@ class _CadastrarContatoState extends State<CadastrarContato> {
                     onSaved: (newValue) {
                       emailController.text = newValue!;
                     },
-                    validator:
-                        EmailValidator(errorText: 'Informe um e-mail válido'),
+                    validator: emailValidator,
                     keyboardType: TextInputType.emailAddress,
                   ),
                   _dropdownButtonFormField((newValue) {
@@ -217,6 +206,21 @@ class _CadastrarContatoState extends State<CadastrarContato> {
               )),
         ));
   }
+
+  final nameValidator = MultiValidator([
+    RequiredValidator(errorText: 'É necessário informar um nome'),
+    MinLengthValidator(4, errorText: 'Informe um nome válido')
+  ]);
+
+  final emailValidator = MultiValidator([
+    RequiredValidator(errorText: 'É necessário informar um email'),
+    EmailValidator(errorText: 'Informe um email válido')
+  ]);
+
+  final phoneValidator = MultiValidator([
+    RequiredValidator(errorText: 'É necessário informar um número de telefone'),
+    MinLengthValidator(8, errorText: 'Informe um número de telefone válido')
+  ]);
 
   void _clearTextFields() {
     nameController.clear();
