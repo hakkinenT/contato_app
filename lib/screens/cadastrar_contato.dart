@@ -59,63 +59,6 @@ class _CadastrarContatoState extends State<CadastrarContato> {
   Widget build(BuildContext context) {
     final list = Provider.of<ContactList>(context);
 
-    Future<String?> _showDialogSucess() async {
-      return showDialog<String>(
-          context: context,
-          barrierDismissible: false,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(20))),
-              titlePadding: EdgeInsets.all(30),
-              title: Column(
-                children: [
-                  Icon(
-                    Icons.check_circle_outline_outlined,
-                    size: 50,
-                    color: Colors.green,
-                  ),
-                  Text('Sucesso!'),
-                  Divider(),
-                  !_isEdit
-                      ? Text(
-                          'O contato foi cadastrado com sucesso!',
-                          textAlign: TextAlign.center,
-                          style:
-                              TextStyle(fontSize: 14.0, color: Colors.black54),
-                        )
-                      : Text(
-                          'O contato foi editado com sucesso!',
-                          textAlign: TextAlign.center,
-                          style:
-                              TextStyle(fontSize: 14.0, color: Colors.black54),
-                        )
-                ],
-              ),
-              actionsPadding: EdgeInsets.only(bottom: 10),
-              actions: [
-                Center(
-                  child: Container(
-                    height: 35.0,
-                    width: 70.0,
-                    child: TextButton(
-                      child: Text(
-                        'OK',
-                        style: TextStyle(
-                            color: Theme.of(context).accentColor,
-                            fontSize: 17.0),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ),
-                )
-              ],
-            );
-          });
-    }
-
     return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -135,7 +78,8 @@ class _CadastrarContatoState extends State<CadastrarContato> {
                     onSaved: (newValue) {
                       nameController.text = newValue!;
                     },
-                    validator: nameValidator,
+                    validator: _validator('É necessário informar um nome',
+                        'Informe um nome válido', 4),
                   ),
                   CustomTextFormField(
                     labelText: 'Telefone',
@@ -143,7 +87,10 @@ class _CadastrarContatoState extends State<CadastrarContato> {
                     onSaved: (newValue) {
                       phoneController.text = newValue!;
                     },
-                    validator: phoneValidator,
+                    validator: _validator(
+                        'É necessário informar um número de telefone',
+                        'Informe um número de telefone válido',
+                        8),
                     keyboardType: TextInputType.numberWithOptions(),
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
@@ -207,20 +154,17 @@ class _CadastrarContatoState extends State<CadastrarContato> {
         ));
   }
 
-  final nameValidator = MultiValidator([
-    RequiredValidator(errorText: 'É necessário informar um nome'),
-    MinLengthValidator(4, errorText: 'Informe um nome válido')
-  ]);
-
   final emailValidator = MultiValidator([
     RequiredValidator(errorText: 'É necessário informar um email'),
     EmailValidator(errorText: 'Informe um email válido')
   ]);
 
-  final phoneValidator = MultiValidator([
-    RequiredValidator(errorText: 'É necessário informar um número de telefone'),
-    MinLengthValidator(8, errorText: 'Informe um número de telefone válido')
-  ]);
+  MultiValidator _validator(String message1, String message2, int minValue) {
+    return MultiValidator([
+      RequiredValidator(errorText: message1),
+      MinLengthValidator(minValue, errorText: message2)
+    ]);
+  }
 
   void _clearTextFields() {
     nameController.clear();
@@ -252,5 +196,59 @@ class _CadastrarContatoState extends State<CadastrarContato> {
                 borderSide: BorderSide.none)),
       ),
     );
+  }
+
+  Future<String?> _showDialogSucess() async {
+    return showDialog<String>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20))),
+            titlePadding: EdgeInsets.all(30),
+            title: Column(
+              children: [
+                Icon(
+                  Icons.check_circle_outline_outlined,
+                  size: 50,
+                  color: Colors.green,
+                ),
+                Text('Sucesso!'),
+                Divider(),
+                !_isEdit
+                    ? Text(
+                        'O contato foi cadastrado com sucesso!',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 14.0, color: Colors.black54),
+                      )
+                    : Text(
+                        'O contato foi editado com sucesso!',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 14.0, color: Colors.black54),
+                      )
+              ],
+            ),
+            actionsPadding: EdgeInsets.only(bottom: 10),
+            actions: [
+              Center(
+                child: Container(
+                  height: 35.0,
+                  width: 70.0,
+                  child: TextButton(
+                    child: Text(
+                      'OK',
+                      style: TextStyle(
+                          color: Theme.of(context).accentColor, fontSize: 17.0),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ),
+              )
+            ],
+          );
+        });
   }
 }
