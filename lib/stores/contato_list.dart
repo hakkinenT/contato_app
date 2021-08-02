@@ -25,6 +25,8 @@ abstract class _ContactList with Store {
         isFavorite: contactModel.isFavorite);
 
     contacts.add(contact);
+
+    contacts.sort((a, b) => a.name.compareTo(b.name));
   }
 
   @action
