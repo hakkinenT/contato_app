@@ -51,14 +51,15 @@ Para a construção desse projeto foram usadas as seguintes ferramentas:
 <p float="left">
     <img src="assets/tela-inicial.png" width="270" height="480">
     <img src="assets/tela-cadastrar-contato.png" width="270" height="480">
+    <img src="assets/tela-contatos-favoritos.png" width="270" height="480">
 </p>
 
 <p float="left">
-    <img src="assets/tela-contatos-favoritos.png" width="270" height="480">
     <img src="assets/tela-detalhes-contato.png" width="270" height="480">
+    <img src="assets/tela-menu-drawer-app.png" width="270" height="480">
 </p>
 
-<img src="assets/tela-menu-drawer-app.png" width="270" height="480">
+
 
 ## License
 MIT License
