@@ -12,7 +12,8 @@ O app foi construído com base no aplicativo desenvolvido no curso Primeiros Pas
     - [Pré-requisitos](#pre-requisitos)
     - [Rodando o app](#rodando-app)
 - [Tecnologias](#tecnologias)
-- [Telas do Contato App](telas-contato-app)
+- [Telas do Contato App](#telas-contato-app)
+- [License](#license)
 
 ## Status do projeto
 Concluído
@@ -47,8 +48,17 @@ Para a construção desse projeto foram usadas as seguintes ferramentas:
 
 ## Telas do Contato App
 
-<img src="assets/tela-inicial.png" width="270" height="480">
-<img src="assets/tela-cadastrar-contato.png" width="270" height="480">
-<img src="assets/tela-contatos-favoritos.png" width="270" height="480">
-<img src="assets/tela-detalhes-contato.png" width="270" height="480">
+<p float="left">
+    <img src="assets/tela-inicial.png" width="270" height="480">
+    <img src="assets/tela-cadastrar-contato.png" width="270" height="480">
+</p>
+
+<p float="left">
+    <img src="assets/tela-contatos-favoritos.png" width="270" height="480">
+    <img src="assets/tela-detalhes-contato.png" width="270" height="480">
+</p>
+
 <img src="assets/tela-menu-drawer-app.png" width="270" height="480">
+
+## License
+MIT License
