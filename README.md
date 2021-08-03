@@ -7,12 +7,12 @@ O app foi construído com base no aplicativo desenvolvido no curso Primeiros Pas
 
 # Tabela de conteúdos
 
-    - [Status do projeto](status-projeto)
-    - [Como usar](#como-usar)
-        - [Pré-requisitos](#pre-requisitos)
-        - [Rodando o app](#rodando-app)
-    - [Tecnologias](#tecnologias)
-    - [Telas do Contato App](telas-contato-app)
+- [Status do projeto](status-projeto)
+- [Como usar](#como-usar)
+    - [Pré-requisitos](#pre-requisitos)
+    - [Rodando o app](#rodando-app)
+- [Tecnologias](#tecnologias)
+- [Telas do Contato App](telas-contato-app)
 
 ## Status do projeto
 Concluído
@@ -46,8 +46,9 @@ Para a construção desse projeto foram usadas as seguintes ferramentas:
 - [MobX](https://mobx.netlify.app/getting-started/)
 
 ## Telas do Contato App
-![Home Page](assets/tela-inicial.png)
-![Cadastrar Contato](assets/tela-cadastrar-contato.png)
-![Contatos Favoritos](assets/tela-contatos-favoritos.png)
-![Detalhes do Contato](assets/tela-detalhes-contato.png)
-![Menu do App](assets/tela-menu-drawer-app.png)
+
+<img src="assets/tela-inicial.png" width="270" height="480">
+<img src="assets/tela-cadastrar-contato.png" width="270" height="480">
+<img src="assets/tela-contatos-favoritos.png" width="270" height="480">
+<img src="assets/tela-detalhes-contato.png" width="270" height="480">
+<img src="assets/tela-menu-drawer-app.png" width="270" height="480">
