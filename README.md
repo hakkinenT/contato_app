@@ -1,6 +1,9 @@
-# contato_app
+# Contato App
 
-A new Flutter project.
+## Descrição do Projeto
+Esse projeto tem como objetivo desenvolver um app de gerenciamento de contatos em Flutter. Esse projeto utiliza o MobX para a realização do gerenciamento de estado. Além disso, ele permite ligar e enviar e-mail para um contato específico.
+
+O app foi construído com base no app desenvolvido no curso Primeiros Passos com Flutter da Digital Innovation One e em outro app desenvolvido anteriormente por mim.
 
 ## Getting Started
 
